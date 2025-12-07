@@ -5,7 +5,7 @@ import Arbitration from '@/models/Arbitration';
 export async function GET() {
   try {
     await dbConnect();
-    const arbitrations = await Arbitration.find({}).sort({ createdAt: -1 });
+    const arbitrations = await Arbitration.find({}).sort({ createdAt: -1 }).limit(50);
     return NextResponse.json(arbitrations);
   } catch (error) {
     console.error('Error fetching arbitrations:', error);

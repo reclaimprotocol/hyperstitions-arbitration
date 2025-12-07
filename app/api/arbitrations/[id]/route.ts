@@ -11,7 +11,7 @@ export async function GET(
     await dbConnect();
     const { id } = await params;
     const arbitration = await Arbitration.findById(id);
-    const sessions = await Session.find({ arbitrationId: id });
+    const sessions = await Session.find({ arbitrationId: id }).sort({ createdAt: -1 }).limit(50);
     console.log("Fetched arbitration with sessions:", arbitration, sessions);
     if (!arbitration) {
       return NextResponse.json(

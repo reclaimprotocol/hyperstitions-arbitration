@@ -11,3 +11,28 @@ You will always have the guarantee that the API call was correctly made, and tha
 Tweak the prompt such that it settles the said prediction market.
 
 That's it :)
+
+This product is hosted at https://arbitration.reclaimprotocol.org
+
+## Self hosting
+Clone :
+```
+$ git pull git@github.com:reclaimprotocol/hyperstitions-arbitration.git
+```
+
+Install deps :
+```
+$ npm install
+```
+
+Set .env
+```
+# .env.local
+RECLAIMPROTOCOL_APP_ID=0x...
+RECLAIMPROTOCOL_APP_SECRET=0x...
+CLAUDE_API_KEY=sk-...
+```
+
+You can get the Reclaim Protocol keys using dev.reclaimprotocol.org
+
+Be sure to toggle on [zkFetch](https://docs.reclaimprotocol.org/zkfetch) for the application on the Reclaim Protocol Dev Tool
