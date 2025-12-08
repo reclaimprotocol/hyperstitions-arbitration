@@ -12,6 +12,7 @@ interface Session {
 interface Arbitration {
   _id: string;
   name: string;
+  apiUrl: string;
   zkFetchMethod: 'GET' | 'POST';
   publicParams: {
     headers?: Record<string, string>;
@@ -172,6 +173,13 @@ export default function ArbitrationDetail() {
               Method
             </h2>
             <p className="text-zinc-700 dark:text-zinc-300">{arbitration.zkFetchMethod}</p>
+          </div>
+
+          <div>
+            <h2 className="text-xl font-semibold text-black dark:text-white mb-2">
+              API URL
+            </h2>
+            <p className="text-zinc-700 dark:text-zinc-300 break-all">{arbitration.apiUrl}</p>
           </div>
 
           <div>
