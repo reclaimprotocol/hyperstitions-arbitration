@@ -66,9 +66,9 @@ export function parseCurl(curlCommand: string, envVariables: Record<string, stri
 
     // Extract body data
     const dataPatterns = [
-      /(?:-d|--data|--data-raw)\s+'([^']+)'/s,
-      /(?:-d|--data|--data-raw)\s+"([^"]+)"/s,
-      /(?:-d|--data|--data-raw)\s+([^\s]+)/s,
+      /(?:-d|--data|--data-raw)\s+'([^']+)'/,
+      /(?:-d|--data|--data-raw)\s+"([^"]+)"/,
+      /(?:-d|--data|--data-raw)\s+([^\s]+)/,
     ];
 
     for (const pattern of dataPatterns) {
@@ -140,7 +140,7 @@ export function separatePublicPrivate(fetchRequest: FetchRequest, curlCommand: s
 
   // Separate body
   if (fetchRequest.body) {
-    const bodyMatch = curlCommand.match(/(?:-d|--data|--data-raw)\s+['"](.+?)['"]/s);
+    const bodyMatch = curlCommand.match(/(?:-d|--data|--data-raw)\s+['"](.+?)['"]/);
     if (bodyMatch && bodyMatch[1].includes('$')) {
       // Body has variables, treat as private
       try {
