@@ -51,7 +51,7 @@ export default function ConfigureZkFetch() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           method,
-          url: arbitrationData.fetchRequest.url,
+          apiUrl: arbitrationData.fetchRequest.url,
           publicParams: publicParamsObj,
           privateParams: privateParamsObj,
         }),

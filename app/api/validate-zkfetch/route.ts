@@ -12,6 +12,13 @@ export async function POST(request: Request) {
       );
     }
 
+    if (!apiUrl) {
+      return NextResponse.json(
+        { error: 'API URL is required' },
+        { status: 400 }
+      );
+    }
+
     const client = new ReclaimClient(process.env.RECLAIMPROTOCOL_APP_ID || "", process.env.RECLAIMPROTOCOL_APP_SECRET || "");
     await client.zkFetch(apiUrl, { method, ...publicParams}, privateParams);
 
