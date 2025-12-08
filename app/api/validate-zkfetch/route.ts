@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { ReclaimClient } from '@reclaimprotocol/zk-fetch';
-const client = new ReclaimClient(process.env.RECLAIMPROTOCOL_APP_ID || "", process.env.RECLAIMPROTOCOL_APP_SECRET || "");
 
 export async function POST(request: Request) {
   try {
@@ -13,6 +12,7 @@ export async function POST(request: Request) {
       );
     }
 
+    const client = new ReclaimClient(process.env.RECLAIMPROTOCOL_APP_ID || "", process.env.RECLAIMPROTOCOL_APP_SECRET || "");
     await client.zkFetch(apiUrl, { method, ...publicParams}, privateParams);
 
     return NextResponse.json({

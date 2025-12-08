@@ -3,15 +3,15 @@ import dbConnect from '@/lib/mongodb';
 import Arbitration from '@/models/Arbitration';
 import Session from '@/models/Session';
 import { ReclaimClient } from '@reclaimprotocol/zk-fetch';
-const client = new ReclaimClient(process.env.RECLAIMPROTOCOL_APP_ID || "", process.env.RECLAIMPROTOCOL_APP_SECRET || "");
 
 // Placeholder for zkFetch - in production, use the actual Reclaim Protocol SDK
 // or run this in a separate service that supports native modules
 async function zkFetch(url: string, publicOptions: any, privateOptions: any) {
   // Make the actual fetch request
   console.log('Making zkFetch request to:', url, 'with options:', publicOptions, privateOptions);
+  const client = new ReclaimClient(process.env.RECLAIMPROTOCOL_APP_ID || "", process.env.RECLAIMPROTOCOL_APP_SECRET || "");
   const response = await client.zkFetch(url, publicOptions, privateOptions);
-  console.log('zkFetch response:', response);  
+  console.log('zkFetch response:', response);
 
   // In production, this would return a cryptographic proof
   // For now, we return the data with a simulated proof structure
