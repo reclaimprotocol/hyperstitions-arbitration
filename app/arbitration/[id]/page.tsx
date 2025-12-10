@@ -14,11 +14,11 @@ interface Arbitration {
   name: string;
   apiUrl: string;
   zkFetchMethod: 'GET' | 'POST';
-  publicParams: {
+  publicParams?: {
     headers?: Record<string, string>;
     body?: any;
   };
-  privateParams: {
+  privateParams?: {
     headers?: Record<string, string>;
     body?: any;
   };
@@ -103,11 +103,11 @@ export default function ArbitrationDetail() {
   const getPrivateParamKeys = () => {
     const keys: { headers: string[], body: string[] } = { headers: [], body: [] };
     console.log("private params", arbitration.privateParams);
-    if (arbitration.privateParams.headers) {
+    if (arbitration.privateParams?.headers) {
       keys.headers = Object.keys(arbitration.privateParams.headers);
     }
 
-    if (arbitration.privateParams.body && typeof arbitration.privateParams.body === 'object') {
+    if (arbitration.privateParams?.body && typeof arbitration.privateParams.body === 'object') {
       keys.body = Object.keys(arbitration.privateParams.body);
     }
 
@@ -182,14 +182,16 @@ export default function ArbitrationDetail() {
             <p className="text-zinc-700 dark:text-zinc-300 break-all">{arbitration.apiUrl}</p>
           </div>
 
-          <div>
-            <h2 className="text-xl font-semibold text-black dark:text-white mb-2">
-              Public Parameters
-            </h2>
-            <pre className="bg-zinc-100 dark:bg-zinc-800 p-4 rounded-lg overflow-x-auto text-sm">
-              {JSON.stringify(arbitration.publicParams, null, 2)}
-            </pre>
-          </div>
+          {arbitration.publicParams && (
+            <div>
+              <h2 className="text-xl font-semibold text-black dark:text-white mb-2">
+                Public Parameters
+              </h2>
+              <pre className="bg-zinc-100 dark:bg-zinc-800 p-4 rounded-lg overflow-x-auto text-sm">
+                {JSON.stringify(arbitration.publicParams, null, 2)}
+              </pre>
+            </div>
+          )}
 
           <div>
             <h2 className="text-xl font-semibold text-black dark:text-white mb-2">
