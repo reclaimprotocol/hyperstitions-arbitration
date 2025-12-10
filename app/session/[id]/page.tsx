@@ -37,11 +37,22 @@ export default function SessionView() {
     try {
       const response = await fetch(`/api/sessions/${id}`);
       const data = await response.json();
+      console.log('private params', data.privateParams);
       setSession(data);
     } catch (error) {
       console.error('Failed to fetch session:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const safeJsonParse = (data: any) => {
+    if (!data) return null;
+    try {
+      return typeof data === 'string' ? JSON.parse(data) : data;
+    } catch (e) {
+      console.error('JSON parse error:', e);
+      return data;
     }
   };
 
@@ -118,7 +129,7 @@ export default function SessionView() {
                   <tr className="border-b border-zinc-200 dark:border-zinc-700">
                     <td className="py-2 pr-4 text-sm font-semibold text-zinc-700 dark:text-zinc-300">URL</td>
                     <td className="py-2 text-sm text-zinc-700 dark:text-zinc-300 break-all">
-                      {JSON.parse(session.apiProofResponse.proof.claimData.parameters).url}
+                      {safeJsonParse(session.apiProofResponse?.proof?.claimData?.parameters)?.url || 'N/A'}
                     </td>
                   </tr>
                   <tr>
@@ -138,7 +149,7 @@ export default function SessionView() {
               Claude Response
             </h2>
             <pre className="bg-zinc-100 dark:bg-zinc-800 p-4 rounded-lg overflow-x-auto text-sm max-h-96">
-              {JSON.stringify(JSON.parse(session.claudeProofResponse.proof.extractedParameterValues.data).content[0].text, null, 2)}
+              {JSON.stringify(safeJsonParse(session.claudeProofResponse?.proof?.extractedParameterValues?.data)?.content?.[0]?.text || 'N/A', null, 2)}
             </pre>
           </div>
 
@@ -150,12 +161,12 @@ export default function SessionView() {
 
             <h3 className="text-lg font-semibold text-black dark:text-white mb-2 mt-4">Request</h3>
             <pre className="bg-zinc-100 dark:bg-zinc-800 p-4 rounded-lg overflow-x-auto text-sm max-h-96">
-              {JSON.stringify(JSON.parse(session.apiProofResponse.proof.claimData.parameters), null, 2)}
+              {JSON.stringify(safeJsonParse(session.apiProofResponse?.proof?.claimData?.parameters) || {}, null, 2)}
             </pre>
 
             <h3 className="text-lg font-semibold text-black dark:text-white mb-2 mt-6">Response</h3>
             <pre className="bg-zinc-100 dark:bg-zinc-800 p-4 rounded-lg overflow-x-auto text-sm max-h-96">
-              {JSON.stringify(JSON.parse(session.apiProofResponse.proof.extractedParameterValues.data), null, 2)}
+              {JSON.stringify(safeJsonParse(session.apiProofResponse?.proof?.extractedParameterValues?.data) || {}, null, 2)}
             </pre>
 
             <h3 className="text-lg font-semibold text-black dark:text-white mb-2 mt-6">Full Proof</h3>
